@@ -1,7 +1,7 @@
 import React ,{useState}from "react";
 import {db} from "../firebaseConfig/firebase";
 import cloudFirestoreContext from "./context";
-import { collection, doc,getDocs,setDoc,updateDoc,deleteDoc} from "firebase/firestore";
+import { collection, doc, getDocs, setDoc, updateDoc, deleteDoc} from "firebase/firestore";
 
 export default function FirestoreContext(props){
     const {children} = props
@@ -29,16 +29,16 @@ export default function FirestoreContext(props){
     }
 
     const createBooks = async(name,author,edition) => {
-        await setDoc(doc(db,"users", (await incrementalCount()).toString()),{
-        "nombre":name,
-        "autor":author,
-        "edicion":edition,
+        await setDoc(doc(db,"books", (await incrementalCount()).toString()),{
+        "name":name,
+        "author":author,
+        "edition":edition,
     })}
 
     const updateBooks =  async(id,name,author,edition) => await updateDoc(doc(db,"books",id),{
-        nombre:name,
-        apellido:author,
-        direccion:edition,
+        "name":name,
+        "author":author,
+        "edition":edition,
     })
 
     const deleteBook = async(id)=> {
@@ -46,6 +46,6 @@ export default function FirestoreContext(props){
     }
 
     return (
-        <cloudFirestoreContext.Provider value={{getBooks,lstBooks:books,createBooks,updateBooks,deleteBook,incrementalCount}}>{children}</cloudFirestoreContext.Provider>
+        <cloudFirestoreContext.Provider value={{getBooks,lstBooks:books,createBooks,updateBooks,deleteBook}}>{children}</cloudFirestoreContext.Provider>
     )
 }
